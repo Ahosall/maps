@@ -75,6 +75,25 @@ climate_profile : climate.reference {
     expectToParse(text);
   });
 
+  it('parses files with block comments', () => {
+    const text = `
+SiiNunit
+{
+/*
+This def is for models that are obsolete and/or have not been modified for a long time.
+The main purpouse is to speed up comitting "model.sii" to SVN
+*/
+
+model_def : model.0
+{
+\tmodel_desc: "/model/building/germany/pref_4s_far.pmd"
+}
+}
+    `;
+
+    expectToParse(text);
+  });
+
   it('parses @include directives', () => {
     const text = `
 SiiNunit

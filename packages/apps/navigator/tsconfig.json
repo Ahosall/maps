@@ -2,10 +2,7 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "jsx": "react-jsx",
-    "paths": {
-      "@mui/material": ["./node_modules/@mui/joy"]
-    }
+    "jsx": "react-jsx"
   },
   "exclude": ["./build"],
   "//": "adding `include` here so .storybook folder is picked up (looks like default glob doesn't recognize dot dirs)",

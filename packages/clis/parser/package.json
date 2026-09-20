@@ -5,14 +5,16 @@
   "license": "GPL-3.0-or-later",
   "type": "module",
   "gypfile": true,
-  "bin": "./index.ts",
+  "bin": {
+    "parser": "./cli.mjs"
+  },
   "scripts": {
     "build": "node-gyp configure && node-gyp build",
-    "postinstall": "npx tsx -e \"const { rmSync, symlinkSync } = require('node:fs'); const t = '../../../node_modules/.bin/parser'; rmSync(t, { force: true }); symlinkSync('../../packages/clis/parser/index.ts', t);\"",
     "gen:types": "npx tsx -e 'import { generateVisitorDts } from \"./game-files/sii-parser\"; console.log(generateVisitorDts());' | npx prettier --parser typescript > types/sii-visitor.d.ts",
     "test": "vitest"
   },
   "devDependencies": {
+    "node-gyp": "^12.1.0",
     "@types/cli-progress": "^3.11.5",
     "@types/jest": "^29.5.11",
     "@types/node": "^22.7.4",

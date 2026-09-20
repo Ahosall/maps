@@ -13,22 +13,23 @@ A demo app built with these tools and components can be found at https://trucker
 
 ### Prerequisites
 
-- [Node and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [Node](https://nodejs.org/)
+- [pnpm](https://pnpm.io/installation)
 - [node-gyp](https://github.com/nodejs/node-gyp)
 
 ### Installation
 
 ```shell
 # clone the repo into a local directory
-mdkir maps
+mkdir maps
 cd maps
 git clone --recurse-submodules https://github.com/truckermudgeon/maps.git .
 
 # install maps projects
-npm install
+pnpm install
 
 # build native addon
-npm run build -w packages/clis/parser
+pnpm build
 ```
 
 ## Projects
@@ -41,7 +42,7 @@ The TruckSim Maps repo contains the following projects:
 PNG files.
 
 ```shell
-npx parser -i pathToGameDirectory -o dirToWriteFilesTo
+pnpm parser -i pathToGameDirectory -o dirToWriteFilesTo
 ```
 
 Parsing can take a couple of minutes, depending on the machine and the installed map DLCs.
@@ -58,33 +59,33 @@ Parsing can take a couple of minutes, depending on the machine and the installed
 
 ```shell
 # generate ATS pmtiles file
-npx generator map -m usa -i dirWithParserOutput -o dirToWriteFilesTo
+pnpm generator map -m usa -i dirWithParserOutput -o dirToWriteFilesTo
 
 # generate ETS2 pmtiles file
-npx generator map -m europe -i dirWithParserOutput -o dirToWriteFilesTo
+pnpm generator map -m europe -i dirWithParserOutput -o dirToWriteFilesTo
 
 # generate ATS and ETS2 footprints pmtiles files
-npx generator footprints -m usa -m europe -i dirWithParserOutput -o dirToWriteFilesTo
+pnpm generator footprints -m usa -m europe -i dirWithParserOutput -o dirToWriteFilesTo
 
 # generate spritesheet files
-npx generator spritesheet -m usa -m europe -i dirWithParserOutput -o dirToWriteFilesTo
+pnpm generator spritesheet -m usa -m europe -i dirWithParserOutput -o dirToWriteFilesTo
 
 # generate geojson files with map labels for scenery towns and villages
 packages/clis/generator/resources/extra-labels/script/csv2json.pl \
   packages/clis/generator/resources/extra-labels/US/*.csv \
   -o packages/clis/generator/resources/usa-labels-meta.json
-npx generator extra-labels -m usa -i dirWithParserOutput -o dirToWriteFilesTo
-npx generator ets2-villages -i dirWithParserOutput -o dirToWriteFileTo
+pnpm generator extra-labels -m usa -i dirWithParserOutput -o dirToWriteFilesTo
+pnpm generator ets2-villages -i dirWithParserOutput -o dirToWriteFileTo
 
 # generate ATS and ETS2 geojson files used for POI searches
-npx generator search -m usa -i dirWithParserOutput -o dirToWriteFileTo -x pathToExtraLabelsGeoJSON
-npx generator search -m europe -i dirWithParserOutput -o dirToWriteFileTo
+pnpm generator search -m usa -i dirWithParserOutput -o dirToWriteFileTo -x pathToExtraLabelsGeoJSON
+pnpm generator search -m europe -i dirWithParserOutput -o dirToWriteFileTo
 
 # generate ATS and ETS2 contours (aka elevations) pmtiles files
-npx generator contours -m usa -m europe -i dirWithParserOutput -o dirToWriteFilesTo
+pnpm generator contours -m usa -m europe -i dirWithParserOutput -o dirToWriteFilesTo
 
 # generate ATS achievements.geojson file
-npx generator achievements -m usa -i dirWithParserOutput -o dirToWriteFileTo
+pnpm generator achievements -m usa -i dirWithParserOutput -o dirToWriteFileTo
 ```
 
 > [!IMPORTANT]
@@ -116,7 +117,7 @@ are slowly being made.
 #       clis/generator/resources/water.geojson
 #
 # Then run the following to start the web server:
-npm start --workspace=packages/apps/demo
+pnpm --filter @truckermudgeon/demo-app start
 ```
 
 The achievements search feature additionally requires the `achievements.json`
@@ -141,7 +142,7 @@ You can download these files from [truckermudgeon.github.io](https://github.com/
 #      packages/apps/prefabs/public
 #
 # Then run the following to start the web server:
-npm start --workspace=packages/apps/prefabs
+pnpm --filter @truckermudgeon/prefabs-app start
 ```
 
 ## License

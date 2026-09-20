@@ -79,10 +79,7 @@ const RoutesDemo = (props: { tileRootUrl: string }) => {
       style={{ width: '100vw', height: '100vh' }} // ensure map fills page
       minZoom={4}
       maxZoom={15}
-      maxBounds={[
-        [-135, 21], // southwest corner (lon, lat)
-        [-84, 54], // northeast corner (lon, lat)
-      ]}
+      maxBounds={[-135, 21, -84, 54]}
       mapStyle={defaultMapStyle}
       attributionControl={false}
       // start off in vegas

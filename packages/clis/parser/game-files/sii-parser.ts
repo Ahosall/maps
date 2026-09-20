@@ -53,6 +53,12 @@ const WhiteSpace = createToken({
   pattern: /\s+/,
   group: Lexer.SKIPPED,
 });
+const BlockComment = createToken({
+  name: 'BlockComment',
+  pattern: /\/\*[\s\S]*?\*\//,
+  group: Lexer.SKIPPED,
+  line_breaks: true,
+});
 const Comment = createToken({
   name: 'Comment',
   pattern: /(\/\/|#).*/,
@@ -77,6 +83,7 @@ const allTokens = [
   HexLiteral,
   Property,
   WhiteSpace,
+  BlockComment,
   Comment,
 ];
 

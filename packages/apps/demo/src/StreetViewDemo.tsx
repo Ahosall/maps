@@ -191,8 +191,10 @@ const StreetViewDemo = (props: StreetViewDemoProps) => {
         minZoom={4}
         maxZoom={15}
         maxBounds={[
-          panoramaMetas[0].point.map(v => v - 1) as [number, number], // southwest corner (lon, lat)
-          panoramaMetas[0].point.map(v => v + 1) as [number, number], // southwest corner (lon, lat)
+          panoramaMetas[0].point[0] - 1,
+          panoramaMetas[0].point[1] - 1,
+          panoramaMetas[0].point[0] + 1,
+          panoramaMetas[0].point[1] + 1,
         ]}
         mapStyle={defaultMapStyle}
         attributionControl={false}

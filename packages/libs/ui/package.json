@@ -9,6 +9,7 @@
     ".": "./index.ts"
   },
   "devDependencies": {
+    "@types/color": "^4.2.0",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
     "typescript": "^5.9.2"
@@ -16,6 +17,7 @@
   "dependencies": {
     "@truckermudgeon/base": "0.0.0",
     "@truckermudgeon/map": "0.0.0",
+    "color": "^4.2.3",
     "maplibre-gl": "^5.18.0",
     "pmtiles": "^4.4.0",
     "react": "^18.2.0",

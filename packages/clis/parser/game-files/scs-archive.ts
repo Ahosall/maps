@@ -43,19 +43,48 @@ const EntryHeader = new r.Struct({
   someByte: r.uint8,
 });
 
-export const enum MetadataType {
+export enum MetadataType {
   IMG = 1,
   SAMPLE = 2,
-  MIP_PROXY,
+  MIP_PROXY = 3,
   INLINE_DIRECTORY = 4,
   PMA_INFO = 5,
   PMG_INFO = 6,
-  PLAIN = 1 << 7,
-  DIRECTORY = MetadataType.PLAIN | 1,
-  MIP_0 = MetadataType.PLAIN | 2,
-  MIP_1 = MetadataType.PLAIN | 3,
-  MIP_TAIL = MetadataType.PLAIN | 4,
+  PLAIN = 128, // 1 << 7
+  DIRECTORY = 129, // PLAIN | 1
+  MIP_0 = 130, // PLAIN | 2
+  MIP_1 = 131, // PLAIN | 3
+  MIP_TAIL = 132, // PLAIN | 4
 }
+
+const toMetadataType = (type: number): MetadataType => {
+  switch (type) {
+    case 1:
+      return MetadataType.IMG;
+    case 2:
+      return MetadataType.SAMPLE;
+    case 3:
+      return MetadataType.MIP_PROXY;
+    case 4:
+      return MetadataType.INLINE_DIRECTORY;
+    case 5:
+      return MetadataType.PMA_INFO;
+    case 6:
+      return MetadataType.PMG_INFO;
+    case 128:
+      return MetadataType.PLAIN;
+    case 129:
+      return MetadataType.DIRECTORY;
+    case 130:
+      return MetadataType.MIP_0;
+    case 131:
+      return MetadataType.MIP_1;
+    case 132:
+      return MetadataType.MIP_TAIL;
+    default:
+      throw new Error('unknown metadata type: ' + type);
+  }
+};
 
 const enum Compression {
   NONE = 0,
@@ -242,7 +271,7 @@ export class ScsArchive {
             metadataHeaderByteOffset + MetadataEntryHeader.size(),
           ),
         );
-        const type = metadataHeader.type as MetadataType;
+        const type = toMetadataType(metadataHeader.type);
         switch (type) {
           case MetadataType.IMG:
           case MetadataType.SAMPLE:
@@ -542,9 +571,10 @@ class ScsArchiveTobjFile extends ScsArchiveFile {
       // BC3_UNORM_SRGB
       const firstMipmapBytes = width * height;
       ddsBytes = super.read().subarray(0, firstMipmapBytes);
-    } else if (imageFormat === 91 || imageFormat === 88) {
+    } else if (imageFormat === 91 || imageFormat === 88 || imageFormat === 93) {
       // 91: B8G8R8A8_UNORM_SRGB
       // 88: B8G8R8X8_UNORM
+      // 93: B8G8R8X8_UNORM_SRGB
 
       // fudge widths/heights. seems to fix problem with ETS2's sr_e763 icon.
       width = closestPowerOf2(this.imageMetadata.width);
@@ -587,7 +617,7 @@ class ScsArchiveTobjFile extends ScsArchiveFile {
           flags: 0,
           // this looks like the only field of import.
           fourCc:
-            imageFormat === 91 || imageFormat === 88
+            imageFormat === 91 || imageFormat === 88 || imageFormat === 93
               ? '\x00\x00\x00\x00'
               : 'DXT5',
           rgbBitCount: 0,

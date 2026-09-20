@@ -1,0 +1,15 @@
+packages:
+  - packages/apis/*
+  - packages/apps/*
+  - packages/clis/*
+  - packages/guis/*
+  - packages/libs/*
+
+onlyBuiltDependencies:
+  - esbuild
+  - node-gyp
+  - protobufjs
+  - trucksim-telemetry
+
+overrides:
+  node-gyp: ^12.1.0

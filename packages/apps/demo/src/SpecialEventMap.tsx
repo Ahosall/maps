@@ -42,8 +42,10 @@ export const SpecialEventMap = (props: {
         zoom: meta.minZoom + 0.5,
       }}
       maxBounds={[
-        [longitude - meta.boundsDelta, latitude - meta.boundsDelta],
-        [longitude + meta.boundsDelta, latitude + meta.boundsDelta],
+        longitude - meta.boundsDelta,
+        latitude - meta.boundsDelta,
+        longitude + meta.boundsDelta,
+        latitude + meta.boundsDelta,
       ]}
     >
       <Layer
